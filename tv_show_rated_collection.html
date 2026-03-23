@@ -1,0 +1,185 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.tr{padding:1rem 0 3rem}
+.tr-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px}
+.tr-title{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.tr-sub{font-size:13px;color:var(--color-text-secondary);margin-top:3px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:0.875rem 1rem}
+.stat-val{font-size:24px;font-weight:500;color:var(--color-text-primary);line-height:1}
+.stat-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:4px;letter-spacing:0.04em;text-transform:uppercase}
+.add-wrap{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1.5rem}
+.add-row{display:grid;grid-template-columns:1fr minmax(0,140px) auto auto;gap:8px;align-items:center}
+.add-wrap input,.add-wrap select{font-size:13px;height:36px;padding:0 10px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);width:100%}
+.star-row{display:flex;gap:4px;align-items:center}
+.star{width:22px;height:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.star svg{width:16px;height:16px}
+.add-btn{height:36px;padding:0 16px;background:#534AB7;color:#EEEDFE;border:none;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:var(--font-sans)}
+.add-btn:hover{background:#3C3489}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.f-btn{font-size:12px;padding:5px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:20px;background:transparent;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans)}
+.f-btn.active{background:#534AB7;color:#EEEDFE;border-color:#534AB7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem;position:relative}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.card-title{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.3;padding-right:8px}
+.del{width:18px;height:18px;border:none;background:transparent;cursor:pointer;color:var(--color-text-secondary);font-size:14px;line-height:1;flex-shrink:0;padding:0;font-family:var(--font-sans)}
+.del:hover{color:var(--color-text-danger,#E24B4A)}
+.genre{display:inline-block;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;margin-bottom:10px;font-weight:500}
+.g-drama{background:#EEEDFE;color:#3C3489}
+.g-comedy{background:#FAEEDA;color:#633806}
+.g-thriller{background:#FAECE7;color:#712B13}
+.g-scifi{background:#E1F5EE;color:#085041}
+.g-crime{background:#FBEAF0;color:#72243E}
+.g-other{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.rating-dots{display:flex;gap:4px}
+.dot{width:8px;height:8px;border-radius:50%}
+.dot.on{background:#534AB7}
+.dot.off{background:var(--color-border-tertiary)}
+.card-note{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.5;font-style:italic}
+.empty{text-align:center;padding:3rem 1rem;color:var(--color-text-secondary);font-size:14px}
+.empty-icon{width:40px;height:40px;margin:0 auto 0.75rem;opacity:0.3}
+</style>
+
+<div class="tr">
+  <div class="tr-head">
+    <div>
+      <div class="tr-title">My watched collection</div>
+      <div class="tr-sub">Rate everything you've finished</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val" id="s-total">0</div><div class="stat-lbl">Shows watched</div></div>
+    <div class="stat"><div class="stat-val" id="s-avg">—</div><div class="stat-lbl">Avg rating</div></div>
+    <div class="stat"><div class="stat-val" id="s-top">—</div><div class="stat-lbl">Top genre</div></div>
+  </div>
+
+  <div class="add-wrap">
+    <div class="add-row">
+      <input id="inp-title" placeholder="Show title..." />
+      <select id="inp-genre">
+        <option value="drama">Drama</option>
+        <option value="comedy">Comedy</option>
+        <option value="thriller">Thriller</option>
+        <option value="scifi">Sci-fi</option>
+        <option value="crime">Crime</option>
+        <option value="other">Other</option>
+      </select>
+      <div class="star-row" id="stars"></div>
+      <button class="add-btn" onclick="addShow()">+ Add</button>
+    </div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+let shows = [];
+let pendingRating = 3;
+let activeFilter = 'all';
+
+const SEEDS = [
+  {id:1,title:'Succession',genre:'drama',rating:5,note:'One of the best endings in TV history'},
+  {id:2,title:'The Bear',genre:'drama',rating:5,note:'Season 1 is relentless'},
+  {id:3,title:'Severance',genre:'scifi',rating:4,note:'Unfinished business — season 2 pending'},
+  {id:4,title:'The White Lotus',genre:'thriller',rating:4,note:'Season 2 > Season 1'},
+  {id:5,title:'Abbott Elementary',genre:'comedy',rating:4,note:'So wholesome and funny'},
+  {id:6,title:'The Diplomat',genre:'drama',rating:3,note:'Good not great'},
+];
+
+async function load(){
+  try{
+    const r = await window.storage.get('tv-shows');
+    shows = r ? JSON.parse(r.value) : SEEDS;
+  }catch(e){shows=SEEDS;}
+  render();
+}
+
+async function save(){
+  try{await window.storage.set('tv-shows',JSON.stringify(shows));}catch(e){}
+}
+
+function genId(){return Date.now();}
+
+function addShow(){
+  const t = document.getElementById('inp-title').value.trim();
+  if(!t) return;
+  shows.unshift({id:genId(),title:t,genre:document.getElementById('inp-genre').value,rating:pendingRating,note:''});
+  document.getElementById('inp-title').value='';
+  pendingRating=3;
+  renderStars();
+  save();
+  render();
+}
+
+function deleteShow(id){
+  shows=shows.filter(s=>s.id!==id);
+  save();render();
+}
+
+function renderStars(){
+  const c=document.getElementById('stars');
+  c.innerHTML='';
+  for(let i=1;i<=5;i++){
+    const d=document.createElement('div');
+    d.className='star';
+    d.innerHTML=`<svg viewBox="0 0 16 16"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6" fill="${i<=pendingRating?'#534AB7':'none'}" stroke="${i<=pendingRating?'#534AB7':'#888780'}" stroke-width="1.2"/></svg>`;
+    d.onclick=(()=>{const v=i;return()=>{pendingRating=v;renderStars();};})();
+    c.appendChild(d);
+  }
+}
+
+function getGenreClass(g){return 'genre g-'+g;}
+
+function renderFilters(){
+  const genres=['all',...new Set(shows.map(s=>s.genre))];
+  const c=document.getElementById('filters');
+  c.innerHTML='';
+  genres.forEach(g=>{
+    const b=document.createElement('button');
+    b.className='f-btn'+(activeFilter===g?' active':'');
+    b.textContent=g==='all'?'All shows':g.charAt(0).toUpperCase()+g.slice(1);
+    b.onclick=()=>{activeFilter=g;render();};
+    c.appendChild(b);
+  });
+}
+
+function renderGrid(){
+  const filtered=activeFilter==='all'?shows:shows.filter(s=>s.genre===activeFilter);
+  const c=document.getElementById('grid');
+  if(!filtered.length){
+    c.innerHTML='<div class="empty" style="grid-column:1/-1"><svg class="empty-icon" viewBox="0 0 40 40"><rect x="4" y="8" width="32" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="5" fill="none" stroke="currentColor" stroke-width="2"/></svg>No shows yet — add one above</div>';
+    return;
+  }
+  c.innerHTML=filtered.map(s=>{
+    const dots=Array.from({length:5},(_,i)=>`<div class="dot ${i<s.rating?'on':'off'}"></div>`).join('');
+    return `<div class="card">
+      <div class="card-top"><div class="card-title">${s.title}</div><button class="del" onclick="deleteShow(${s.id})">×</button></div>
+      <div class="${getGenreClass(s.genre)}">${s.genre}</div>
+      <div class="rating-dots">${dots}</div>
+      ${s.note?`<div class="card-note">"${s.note}"</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderStats(){
+  const n=shows.length;
+  document.getElementById('s-total').textContent=n;
+  if(n===0){document.getElementById('s-avg').textContent='—';document.getElementById('s-top').textContent='—';return;}
+  const avg=(shows.reduce((a,s)=>a+s.rating,0)/n).toFixed(1);
+  document.getElementById('s-avg').textContent=avg;
+  const freq={};shows.forEach(s=>freq[s.genre]=(freq[s.genre]||0)+1);
+  const top=Object.entries(freq).sort((a,b)=>b[1]-a[1])[0][0];
+  document.getElementById('s-top').textContent=top.charAt(0).toUpperCase()+top.slice(1);
+}
+
+function render(){renderFilters();renderGrid();renderStats();}
+
+document.getElementById('inp-title').addEventListener('keydown',e=>{if(e.key==='Enter')addShow();});
+renderStars();
+load();
+</script>
