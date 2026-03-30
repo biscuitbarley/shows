@@ -10,7 +10,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#ffffff;--bg2:#f5f4f0;--text:#1a1a18;--text2:#6b6b68;--text3:#9a9a97;--border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.18);--purple:#534AB7;--purple-dark:#3C3489;--radius-md:8px;--radius-lg:12px}
 body{font-family:'DM Sans',sans-serif;background:var(--bg2);color:var(--text);min-height:100vh;padding:2rem 1rem 5rem}
-.container{max-width:760px;margin:0 auto}
+.container{max-width:800px;margin:0 auto}
 .page-header{margin-bottom:2rem}
 .page-header h1{font-family:'DM Serif Display',serif;font-size:36px;font-weight:400;letter-spacing:-0.02em;line-height:1.15}
 .page-header h1 em{font-style:italic;color:var(--purple)}
@@ -20,10 +20,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg2);color:var(--text);mi
 .stat-val{font-size:26px;font-weight:500;line-height:1}
 .stat-lbl{font-size:11px;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em}
 .add-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem}
-.add-row{display:grid;grid-template-columns:1fr 130px 120px auto auto;gap:8px;align-items:center}
 .add-card input,.add-card select{font-family:'DM Sans',sans-serif;font-size:13px;height:38px;padding:0 12px;border:0.5px solid var(--border2);border-radius:var(--radius-md);background:var(--bg2);color:var(--text);width:100%;outline:none}
 .add-card input:focus,.add-card select:focus{border-color:var(--purple)}
-.star-row{display:flex;gap:4px;align-items:center}
+.add-row1{display:grid;grid-template-columns:1fr 140px 140px 120px;gap:8px;margin-bottom:8px}
+.add-row2{display:grid;grid-template-columns:140px 140px 100px auto auto;gap:8px;align-items:center}
+.star-row{display:flex;gap:4px;align-items:center;height:38px}
 .star{width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .star svg{width:18px;height:18px;transition:transform 0.1s}
 .star:hover svg{transform:scale(1.15)}
@@ -41,15 +42,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg2);color:var(--text);mi
 .sort-row{display:flex;align-items:center;gap:8px;margin-bottom:1.25rem}
 .sort-row label{font-size:12px;color:var(--text2)}
 .sort-row select{font-family:'DM Sans',sans-serif;font-size:12px;height:32px;padding:0 10px;border:0.5px solid var(--border);border-radius:var(--radius-md);background:var(--bg);color:var(--text);outline:none;cursor:pointer}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem;transition:border-color 0.15s}
 .card:hover{border-color:var(--border2)}
-.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
 .card-title{font-size:14px;font-weight:500;line-height:1.35;padding-right:6px}
 .card-meta{font-size:11px;color:var(--text3);margin-top:6px}
-.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;line-height:1;padding:0;flex-shrink:0;transition:color 0.15s}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;line-height:1;padding:0;flex-shrink:0;transition:color 0.15s;font-family:'DM Sans',sans-serif}
 .del-btn:hover{color:#E24B4A}
-.badge{display:inline-block;font-size:10px;letter-spacing:0.07em;text-transform:uppercase;font-weight:500;padding:3px 9px;border-radius:20px;margin-bottom:10px}
+.card-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.badge{display:inline-block;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;font-weight:500;padding:3px 8px;border-radius:20px}
 .g-drama{background:#EEEDFE;color:#3C3489}
 .g-comedy{background:#FAEEDA;color:#633806}
 .g-thriller{background:#FAECE7;color:#712B13}
@@ -57,13 +59,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg2);color:var(--text);mi
 .g-crime{background:#FBEAF0;color:#72243E}
 .g-reality{background:#EAF3DE;color:#27500A}
 .g-other{background:#F1EFE8;color:#5F5E5A}
-.dots{display:flex;gap:5px}
+.s-finished{background:#EAF3DE;color:#27500A}
+.s-watching{background:#E6F1FB;color:#0C447C}
+.s-dropped{background:#FCEBEB;color:#791F1F}
+.network-tag{background:#F1EFE8;color:#5F5E5A}
+.dots{display:flex;gap:5px;margin-bottom:6px}
 .dot{width:9px;height:9px;border-radius:50%}
 .dot.on{background:var(--purple)}
 .dot.off{background:#D3D1C7}
+.seasons-note{font-size:11px;color:var(--text2);margin-top:4px}
 .empty{grid-column:1/-1;text-align:center;padding:4rem 1rem;color:var(--text3);font-size:14px}
 .empty-icon{width:44px;height:44px;margin:0 auto 1rem;opacity:0.25}
-@media(max-width:580px){.add-row{grid-template-columns:1fr 1fr}.add-row .star-row{grid-column:1/-1;justify-content:center}.add-btn{grid-column:1/-1}}
+@media(max-width:600px){.add-row1{grid-template-columns:1fr 1fr}.add-row2{grid-template-columns:1fr 1fr}.add-btn{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -72,13 +79,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg2);color:var(--text);mi
     <h1>My <em>watched</em> collection</h1>
     <p>A shared TV log — rate everything you have finished</p>
   </div>
+
   <div class="stats">
-    <div class="stat"><div class="stat-val" id="s-total">—</div><div class="stat-lbl">Shows watched</div></div>
+    <div class="stat"><div class="stat-val" id="s-total">—</div><div class="stat-lbl">Shows logged</div></div>
     <div class="stat"><div class="stat-val" id="s-avg">—</div><div class="stat-lbl">Avg rating</div></div>
     <div class="stat"><div class="stat-val" id="s-top">—</div><div class="stat-lbl">Top genre</div></div>
   </div>
+
   <div class="add-card">
-    <div class="add-row">
+    <div class="add-row1">
       <input id="inp-title" placeholder="Show title..." />
       <select id="inp-genre">
         <option value="drama">Drama</option>
@@ -89,11 +98,38 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg2);color:var(--text);mi
         <option value="reality">Reality</option>
         <option value="other">Other</option>
       </select>
+      <select id="inp-network">
+        <option value="Netflix">Netflix</option>
+        <option value="HBO">HBO / Max</option>
+        <option value="Apple TV+">Apple TV+</option>
+        <option value="Hulu">Hulu</option>
+        <option value="Disney+">Disney+</option>
+        <option value="Amazon">Amazon Prime</option>
+        <option value="Peacock">Peacock</option>
+        <option value="Paramount+">Paramount+</option>
+        <option value="CBS">CBS</option>
+        <option value="NBC">NBC</option>
+        <option value="ABC">ABC</option>
+        <option value="Fox">Fox</option>
+        <option value="FX">FX</option>
+        <option value="Showtime">Showtime</option>
+        <option value="AMC">AMC</option>
+        <option value="Other">Other</option>
+      </select>
+      <select id="inp-status">
+        <option value="Finished">Finished</option>
+        <option value="Watching">Watching</option>
+        <option value="Dropped">Dropped</option>
+      </select>
+    </div>
+    <div class="add-row2">
       <input id="inp-name" placeholder="Your name..." />
+      <input id="inp-seasons" placeholder="Seasons watched..." type="number" min="0" max="99" style="width:100%" />
       <div class="star-row" id="stars"></div>
       <button class="add-btn" id="add-btn" onclick="addShow()">+ Add</button>
     </div>
   </div>
+
   <div class="status-bar"><div class="sdot loading" id="sdot"></div><span id="stext">Connecting to your sheet...</span></div>
   <div class="filters" id="filters"></div>
   <div class="sort-row">
@@ -107,8 +143,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg2);color:var(--text);mi
   </div>
   <div class="grid" id="grid"></div>
 </div>
+
 <script>
-const URL = 'https://script.google.com/macros/s/AKfycbyn81FtL9C8J6GEYhZpG-_dduC37LKJ_urq4Vm_5VBOWVe8fG6TNjk6rZopIekMNQe1/exec';
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbyn81FtL9C8J6GEYhZpG-_dduC37LKJ_urq4Vm_5VBOWVe8fG6TNjk6rZopIekMNQe1/exec';
 let shows=[],pendingRating=3,activeFilter='all';
 
 function setStatus(type,msg){
@@ -119,12 +156,22 @@ function setStatus(type,msg){
 async function loadShows(){
   setStatus('loading','Loading your collection...');
   try{
-    const res=await fetch(URL);
+    const res=await fetch(SCRIPT_URL);
     const data=await res.json();
-    shows=data.map(r=>({id:String(r.id),title:r.title,genre:(r.genre||'other').toLowerCase(),rating:parseInt(r.rating)||3,added_by:r.added_by||'',date_added:r.date_added||''}));
+    shows=data.map(r=>({
+      id:String(r.id),
+      title:r.title||'',
+      genre:(r.genre||'other').toLowerCase(),
+      rating:parseInt(r.rating)||3,
+      added_by:r.added_by||'',
+      date_added:r.date_added||'',
+      network:r.network||'',
+      status:r.status||'Finished',
+      seasons:r.seasons||''
+    }));
     setStatus('ok','Connected · '+shows.length+' show'+(shows.length!==1?'s':'')+' loaded');
     render();
-  }catch(e){setStatus('error','Could not connect to sheet — check your deployment');}
+  }catch(e){setStatus('error','Could not connect — check your deployment');}
 }
 
 async function addShow(){
@@ -136,9 +183,23 @@ async function addShow(){
   btn.disabled=true;btn.textContent='Adding...';
   setStatus('loading','Saving to sheet...');
   try{
-    const res=await fetch(URL,{method:'POST',body:JSON.stringify({action:'add',title,genre:document.getElementById('inp-genre').value,rating:pendingRating,added_by:name})});
+    const res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({
+      action:'add',
+      title,
+      genre:document.getElementById('inp-genre').value,
+      rating:pendingRating,
+      added_by:name,
+      network:document.getElementById('inp-network').value,
+      status:document.getElementById('inp-status').value,
+      seasons:document.getElementById('inp-seasons').value||''
+    })});
     const data=await res.json();
-    if(data.success){document.getElementById('inp-title').value='';pendingRating=3;renderStars();await loadShows();}
+    if(data.success){
+      document.getElementById('inp-title').value='';
+      document.getElementById('inp-seasons').value='';
+      pendingRating=3;renderStars();
+      await loadShows();
+    }
   }catch(e){setStatus('error','Could not save — try again');}
   btn.disabled=false;btn.textContent='+ Add';
 }
@@ -146,8 +207,10 @@ async function addShow(){
 async function deleteShow(id){
   if(!confirm('Remove this show?'))return;
   setStatus('loading','Removing...');
-  try{await fetch(URL,{method:'POST',body:JSON.stringify({action:'delete',id})});await loadShows();}
-  catch(e){setStatus('error','Could not delete — try again');}
+  try{
+    await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({action:'delete',id})});
+    await loadShows();
+  }catch(e){setStatus('error','Could not delete — try again');}
 }
 
 function renderStars(){
@@ -182,15 +245,38 @@ function getSorted(list){
   return copy;
 }
 
+function statusClass(s){
+  if(s==='Watching')return 's-watching';
+  if(s==='Dropped')return 's-dropped';
+  return 's-finished';
+}
+
 function renderGrid(){
   const filtered=activeFilter==='all'?shows:shows.filter(s=>s.genre===activeFilter);
   const sorted=getSorted(filtered);
   const c=document.getElementById('grid');
-  if(!sorted.length){c.innerHTML='<div class="empty"><svg class="empty-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="36" height="26" rx="3"/><circle cx="22" cy="23" r="6"/><line x1="14" y1="6" x2="14" y2="10"/><line x1="30" y1="6" x2="30" y2="10"/></svg>No shows yet — add one above</div>';return;}
+  if(!sorted.length){
+    c.innerHTML='<div class="empty"><svg class="empty-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="36" height="26" rx="3"/><circle cx="22" cy="23" r="6"/><line x1="14" y1="6" x2="14" y2="10"/><line x1="30" y1="6" x2="30" y2="10"/></svg>No shows yet — add one above</div>';
+    return;
+  }
   c.innerHTML=sorted.map(s=>{
     const dots=Array.from({length:5},(_,i)=>`<div class="dot ${i<s.rating?'on':'off'}"></div>`).join('');
     const meta=[s.added_by,s.date_added].filter(Boolean).join(' · ');
-    return `<div class="card"><div class="card-top"><div class="card-title">${s.title}</div><button class="del-btn" onclick="deleteShow('${s.id}')">x</button></div><div class="badge g-${s.genre}">${s.genre}</div><div class="dots">${dots}</div>${meta?`<div class="card-meta">${meta}</div>`:''}</div>`;
+    const seasonsText=s.seasons?`${s.seasons} season${s.seasons==1?'':'s'} watched`:'';
+    return `<div class="card">
+      <div class="card-top">
+        <div class="card-title">${s.title}</div>
+        <button class="del-btn" onclick="deleteShow('${s.id}')">×</button>
+      </div>
+      <div class="card-badges">
+        <span class="badge g-${s.genre}">${s.genre}</span>
+        <span class="badge ${statusClass(s.status)}">${s.status}</span>
+        ${s.network?`<span class="badge network-tag">${s.network}</span>`:''}
+      </div>
+      <div class="dots">${dots}</div>
+      ${seasonsText?`<div class="seasons-note">${seasonsText}</div>`:''}
+      ${meta?`<div class="card-meta">${meta}</div>`:''}
+    </div>`;
   }).join('');
 }
 
